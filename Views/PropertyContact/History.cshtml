@@ -1,0 +1,42 @@
+﻿
+@model IEnumerable<Property>
+
+<div class="container">
+    <h2>Property History</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Property Name</th>
+                <th>Asking Price</th>
+                <th>Owner</th>
+                <th>Contact</th>
+                <th>Email</th>
+                <th>Property Address</th>
+                <th>Date of Purchase</th>
+                <th>Sold At Price in EUR</th>
+                <th>Sold At Price in USD</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var property in Model)
+            {
+                foreach (var sold in property.SoldProperties)
+                {
+                    <tr>
+                        <td>@property.Id</td>
+                        <td>@property.Name</td>
+                        <td>@property.Price</td>
+                        <td>@sold.Contact.FirstName @sold.Contact.LastName</td>
+                        <td>@sold.Contact.PhoneNumber</td>
+                        <td>@sold.Contact.Email</td>
+                        <td>@property.Address</td>
+                        <td>@sold.DateOfRegistration</td>
+                        <td>@sold.AcquisitionPrice</td>
+                        <td>@(sold.AcquisitionPrice * (decimal)1.1) @*Assuming 1 EUR = 1.1 USD*@</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

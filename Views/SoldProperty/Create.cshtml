@@ -1,0 +1,24 @@
+﻿@model SoldProperty
+
+<div class="container">
+    <h2>Record Sold Property</h2>
+    <form asp-action="Create" method="post">
+        <div class="form-group">
+            <label asp-for="PropertyId">Property</label>
+            <select asp-for="PropertyId" class="form-control" asp-items="ViewBag.Properties"></select>
+        </div>
+        <div class="form-group">
+            <label asp-for="ContactId">Contact</label>
+            <select asp-for="ContactId" class="form-control" asp-items="ViewBag.Contacts"></select>
+        </div>
+        <div class="form-group">
+            <label asp-for="AcquisitionPrice">Acquisition Price</label>
+            <input asp-for="AcquisitionPrice" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="DateOfRegistration">Date Of Registration</label>
+            <input asp-for="DateOfRegistration" class="form-control" type="date" />
+        </div>
+        <button type="submit" class="btn btn-primary">Record</button>
+    </form>
+</div>

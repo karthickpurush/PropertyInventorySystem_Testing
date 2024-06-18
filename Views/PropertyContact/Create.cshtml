@@ -1,0 +1,57 @@
+﻿@model  PropertyContactViewModel
+
+<div class="container">
+    <h2>Create Property and Contact</h2>
+    <form asp-action="Create" method="post">
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Property Details</h3>
+                <div class="form-group">
+                    <label asp-for="Property.Name">Property Name</label>
+                    <input asp-for="Property.Name" class="form-control" />
+                    <span asp-validation-for="Property.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Property.Address">Property Address</label>
+                    <input asp-for="Property.Address" class="form-control" />
+                    <span asp-validation-for="Property.Address" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Property.Price">Property Price</label>
+                    <input asp-for="Property.Price" class="form-control" />
+                    <span asp-validation-for="Property.Price" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Property.DateOfRegistration">Date Of Registration</label>
+                    <input asp-for="Property.DateOfRegistration" class="form-control" type="date" />
+                    <span asp-validation-for="Property.DateOfRegistration" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h3>Contact Details</h3>
+                <div class="form-group">
+                    <label asp-for="Contact.FirstName">FirstName</label>
+                    <input asp-for="Contact.FirstName" class="form-control" />
+                    <span asp-validation-for="Contact.FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Contact.LastName">LastName</label>
+                    <input asp-for="Contact.LastName" class="form-control" />
+                    <span asp-validation-for="Contact.LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Contact.PhoneNumber">PhoneNumber</label>
+                    <input asp-for="Contact.PhoneNumber" class="form-control" />
+                    <span asp-validation-for="Contact.PhoneNumber" class="text-danger"></span>
+
+                </div>
+                <div class="form-group">
+                    <label asp-for="Contact.Email">Email</label>
+                    <input asp-for="Contact.Email" class="form-control" />
+                    <span asp-validation-for="Contact.Email" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+</div>
