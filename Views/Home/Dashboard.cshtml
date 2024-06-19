@@ -1,0 +1,145 @@
+﻿@model IEnumerable<PropertyInventorySystem.Models.PropertyDashboardViewModel>
+@{
+    ViewData["Title"] = "Home Page";
+}
+@{
+    int counter = 1;
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" />
+<style>
+    .dataTables_filter input {
+        float: right;
+        margin: 10px;
+        border: 1px solid #007bff; /* Blue border */
+        border-radius: 4px; /* Rounded borders */
+        padding: 5px 10px; /* Padding inside the search box */
+        margin-bottom: 10px; /* Space below the search box */
+    }
+  /*   #propertyDashboardTable thead th {
+        background-color: #007bff;
+        color: white;
+        padding: 5px;
+    }
+    #propertyDashboardTable tbody td {
+        background-color: #f8f9fa;
+        padding: 5px;
+    }  */
+
+    .table-wrapper {
+        position: absolute;
+        top: 100px;
+        right: 0px;
+    margin-left: 10px;
+	width: 100%;
+	height: 100%;
+	flex-direction: column;
+	display: flex;
+	align-content: center;
+	justify-content: start;
+	align-items: center;
+}
+
+table {
+	border: 0px solid #ddd;
+    width: 100%;
+}
+tr:nth-child(odd) {
+	background-color: #f9f9f9;
+	border:none;
+}
+th{
+	color: black;
+	background-color: cornflowerblue;
+	border: none;
+	border-radius:0;
+}
+
+    td {
+        color: black;
+        background-color: white;
+        border: none;
+        border-radius: 0;
+    }
+</style>
+ <body>
+
+    <form class="form-inline mb-3" style="position: absolute;top: 58px;right: 0px;">
+        <input type="text" name="searchString" id="customSearchBox" class="form-control mr-sm-2" placeholder="Search" />
+    </form>
+
+    <div class="table-responsive table-wrapper">      
+<table id="propertyDashboardTable" class="table table-hover">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Property Name</th>
+            <th>Asking Price</th>
+            <th>Owner</th>
+            <th>Contact</th>
+            <th>Email</th>
+            <th>Property Address</th>
+            <th>Date of Purchase</th>
+            <th>Sold At Price in EUR</th>
+            <th>Sold At Price in USD</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@counter</td>
+                <td>@item.PropertyName</td>
+                <td>EUR @item.AskingPriceEUR.ToString("N0")</td>
+                <td>@item.Owner</td>
+                <td>@item.ContactNumber</td>
+                <td>@item.Email</td>
+                <td>@item.PropertyAddress</td>
+                <td>@item.DateOfPurchase.ToString("dd/MM/yyyy")</td>
+                <td>EUR @item.SoldAtPriceEUR.ToString("N0")</td>
+                <td>USD @item.SoldAtPriceUSD.ToString("N0")</td>
+            </tr>
+            counter++;
+        }
+    </tbody>
+</table>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+</body>
+<script>
+    $(document).ready(function () {
+          
+            $('#customSearchBox').keyup(function () {
+      
+                   var input, filter, table, tr, td, i, j, txtValue;
+                input = document.getElementById("customSearchBox");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("propertyDashboardTable");
+                tr = table.getElementsByTagName("tr");
+
+                for (i = 1; i < tr.length; i++) {
+                    tr[i].style.display = "none";
+                    td = tr[i].getElementsByTagName("td");
+                    for (j = 0; j < td.length; j++) {
+                        if (td[j]) {
+                            txtValue = td[j].textContent || td[j].innerText;
+                            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                tr[i].style.display = "";
+                                break;
+                            }
+                        }
+                    }
+                }
+            });
+                      
+       
+  });
+               
+</script>

@@ -5,6 +5,7 @@ using PropertyInventorySystem.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using PropertyInventorySystem.Data;
+
 namespace PropertyInventorySystem.Repositories
 {
     public class SoldPropertyRepository : ISoldPropertyRepository

@@ -13,7 +13,7 @@
 }
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" />
 <style>
-   /*  .dataTables_filter input {
+   .dataTables_filter input {
         border: 1px solid #007bff; /* Blue border */
         border-radius: 4px; /* Rounded borders */
         padding: 5px 10px; /* Padding inside the search box */
@@ -27,9 +27,10 @@
         background-color: #f8f9fa;
     } */
  </style>
+ <body>
+   
 <div class="text-center">
-    <h1 class="display-4">Property Dashboard</h1>
-    @* <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p> *@
+    <h1 class="display-4">Property Dashboard in Sold</h1> 
 </div>
 <input type="text" id="customSearchBox" placeholder="Search...">
 <div class="table-responsive">
@@ -68,27 +69,22 @@
     </tbody>
 </table>
 </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+</body>
 <script>
     $(document).ready(function () {
-        // $('#propertyDashboardTable').DataTable({
-        //     paging: true,
-        //     ordering: true,
-        //     search: true,
-        //     pageLength: 10, // Number of items per page
-        //     order: [[1, 'asc']], // Default ordering (column index, order)
-        //     language: {
-        //         search: "Filter records:",
-        //         lengthMenu: "Display _MENU_ records per page",
-        //         zeroRecords: "No matching records found",
-        //         info: "Showing page _PAGE_ of _PAGES_",
-        //         infoEmpty: "No records available",
-        //         infoFiltered: "(filtered from _MAX_ total records)"
-        //     }
-        // });
-        $('#propertyDashboardTable').DataTable({
-            "dom": '<"myCustomSearch">rtip'
-           // "dom": '<"top"f>rt<"bottom"lp><"clear">', // Remove 'f' from the default position
-            "searching": false // Disable initial search box
-        });
+     
+      // Initialize the DataTable
+    var table = $('#propertyDashboardTable').DataTable({
+        // If you want to keep any custom DOM positioning, adjust here, but ensure 'f' is not included to avoid duplicating the search box
+        "dom": '<"top"i>rt<"bottom"lp><"clear">',
+        "searching": true // Enable the search functionality
+    });
+
+    // Custom search functionality
+    $('#customSearchBox').keyup(function () {
+        table.search($(this).val()).draw(); // Use the DataTable search API
     });
 </script>

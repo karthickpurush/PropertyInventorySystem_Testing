@@ -1,15 +1,15 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PropertyInventorySystem.Data;
 using PropertyInventorySystem.Models;
 
 namespace PropertyInventorySystem.Controllers
 {
-    public class SoldPropertyController : Controller
+    public class PropertyDashboardController : Controller
     {
         private readonly AppDbContext _context;
 
-        public SoldPropertyController(AppDbContext context)
+        public PropertyDashboardController(AppDbContext context)
         {
             _context = context;
         }
@@ -26,7 +26,7 @@ namespace PropertyInventorySystem.Controllers
                 // Map to the ViewModel
                 var dashboardData = soldProperties.Select(sp => new PropertyDashboardViewModel
                 {
-                    //  Id = sp.Property.Id,s
+                  //  Id = sp.Property.Id,s
                     PropertyName = sp.Property.Name,
                     AskingPriceEUR = sp.Property.Price, // Assuming this is the asking price
                     Owner = $"{sp.Contact.FirstName} {sp.Contact.LastName}",
