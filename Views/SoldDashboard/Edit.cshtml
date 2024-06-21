@@ -71,13 +71,14 @@
                 type: 'POST',
                 url: $(this).attr('action'), 
                 data: formData,
-                success: function (response) {                   
-                    console.log('Form submitted successfully');                   
+                success: function (response) {
+                    alert('Register succesfully');
+                    console.log('Form submitted successfully');         // Debug          
                     window.location.href = '@Url.Action("Dashboard", "Home")';
                 },
                 error: function (xhr, status, error) {
-                    // Handle error
-                    console.error('Form submission failed:', error);
+                   
+                    console.error('Form submission failed:', error);   // Debug
                 }
             });
         });
