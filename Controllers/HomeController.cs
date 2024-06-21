@@ -9,9 +9,9 @@ namespace PropertyInventorySystem.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly AppDbContext _context; // Add the DbContext
+        private readonly AppDbContext _context; // DbContext
 
-        public HomeController(ILogger<HomeController> logger, AppDbContext context) // Inject the DbContext
+        public HomeController(ILogger<HomeController> logger, AppDbContext context) 
         {
             _logger = logger;
             _context = context;
@@ -39,14 +39,14 @@ namespace PropertyInventorySystem.Controllers
                 PropertyAddress = sp.Property.Address,
                 DateOfPurchase = sp.Property.DateOfRegistration, // Assuming this is the purchase date
                 SoldAtPriceEUR = sp.AcquisitionPrice, // Assuming SoldProperty has this field
-                SoldAtPriceUSD = ConvertEURtoUSD(sp.AcquisitionPrice) // Convert using your method
+                SoldAtPriceUSD = ConvertEURtoUSD(sp.AcquisitionPrice) // Convert using below method 
             }).ToList();
 
-            return View(dashboardData); // Ensure you have a corresponding View at Views/Home/Dashboard.cshtml
+            return View(dashboardData); // View at Views/Home/Dashboard.cshtml
         }
-        private decimal ConvertEURtoUSD(decimal amountEUR)
+        private static decimal ConvertEURtoUSD(decimal amountEUR)
         {
-            decimal exchangeRate = 1.10M; // Placeholder exchange rate
+            decimal exchangeRate = 1.10M; // Placeholder exchange rate / Future Task we can use API to get the exchange rate
             return amountEUR * exchangeRate;
         }
         public IActionResult Privacy()

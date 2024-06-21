@@ -28,7 +28,7 @@ namespace PropertyInventorySystem.Repositories
             }
             catch (Exception ex)
             {
-                // Log the exception (ex)
+               
                 throw new Exception("Could not retrieve sold properties.", ex);
             }
         }
@@ -44,7 +44,7 @@ namespace PropertyInventorySystem.Repositories
             }
             catch (Exception ex)
             {
-                // Log the exception (ex)
+              
                 throw new Exception($"Could not retrieve sold property with Property ID {propertyId} and Contact ID {contactId}.", ex);
             }
         }
@@ -58,7 +58,7 @@ namespace PropertyInventorySystem.Repositories
             }
             catch (Exception ex)
             {
-                // Log the exception (ex)
+              
                 throw new Exception("Could not add sold property.", ex);
             }
         }
@@ -72,7 +72,7 @@ namespace PropertyInventorySystem.Repositories
             }
             catch (Exception ex)
             {
-                // Log the exception (ex)
+              
                 throw new Exception("Could not update sold property.", ex);
             }
         }
@@ -88,7 +88,6 @@ namespace PropertyInventorySystem.Repositories
             }
             catch (Exception ex)
             {
-                // Log the exception (ex)
                 throw new Exception($"Could not delete sold property with Property ID {propertyId} and Contact ID {contactId}.", ex);
             }
         }

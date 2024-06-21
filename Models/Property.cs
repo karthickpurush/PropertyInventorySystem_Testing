@@ -6,6 +6,7 @@ namespace PropertyInventorySystem.Models
 {
     public class Property
     {
+   
         public Guid Id { get; set; }
         [Required]
         [StringLength(100, ErrorMessage = "Name cannot be longer than 100 characters.")]

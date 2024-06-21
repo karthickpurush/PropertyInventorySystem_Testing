@@ -15,30 +15,27 @@ namespace PropertyInventorySystem.Models
                     new[] { nameof(Property.Price) });
             }
 
-            // Additional custom validation logic
-        }
+                }
         public static (Property, Contact) MapToEntity(PropertyContactViewModel model)
         {
             var property = new Property
             {
-                // Assuming your Property entity has Name and Address properties
+               
                 Name = model.Property.Name,
                 Address = model.Property.Address,
                 Price = model.Property.Price,
                 DateOfRegistration=model.Property.DateOfRegistration
-
-                // Map other properties as needed
+              
             };
 
             var contact = new Contact
             {
-                // Assuming your Contact entity has Name and Email properties
+             
                 FirstName = model.Contact.FirstName, 
                 LastName = model.Contact.LastName,
                 PhoneNumber= model.Contact.PhoneNumber,
                 Email = model.Contact.Email
 
-                // Map other properties as needed
             };
 
             return (property, contact);

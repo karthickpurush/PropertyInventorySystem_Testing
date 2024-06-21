@@ -26,7 +26,7 @@ namespace PropertyInventorySystem.Repositories
             }
             catch (Exception ex)
             {
-                // Log the exception (ex)
+            
                 throw new Exception("Could not retrieve properties.", ex);
             }
         }
@@ -39,7 +39,7 @@ namespace PropertyInventorySystem.Repositories
             }
             catch (Exception ex)
             {
-                // Log the exception (ex)
+             
                 throw new Exception($"Could not retrieve property with ID {id}.", ex);
             }
         }
@@ -53,7 +53,7 @@ namespace PropertyInventorySystem.Repositories
             }
             catch (Exception ex)
             {
-                // Log the exception (ex)
+              
                 throw new Exception("Could not add property.", ex);
             }
         }
@@ -67,7 +67,7 @@ namespace PropertyInventorySystem.Repositories
             }
             catch (Exception ex)
             {
-                // Log the exception (ex)
+               
                 throw new Exception("Could not update property.", ex);
             }
         }
@@ -82,7 +82,7 @@ namespace PropertyInventorySystem.Repositories
             }
             catch (Exception ex)
             {
-                // Log the exception (ex)
+              
                 throw new Exception($"Could not delete property with ID {id}.", ex);
             }
         }
