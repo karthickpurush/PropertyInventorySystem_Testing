@@ -13,19 +13,15 @@ namespace PropertyInventorySystem.Controllers
         public SoldDashboardController(ILogger<SoldDashboardController> logger, AppDbContext context)
         {
             _logger = logger;
-            _context = context; // Assign the injected context to the private field
+            _context = context;
         }
       
-
-        // Dependency injection for repositories or services if needed
-
         [HttpGet]
         public async Task<IActionResult> Index(string searchString, int? pageNumber)
         {
-            var pageSize = 10; // Or another appropriate value
+            var pageSize = 10; 
             ViewData["CurrentFilter"] = searchString;
-
-            // Query your database for SoldProperty entities
+          
             var query = _context.SoldProperties.AsQueryable();
 
             if (!String.IsNullOrEmpty(searchString))
@@ -33,8 +29,7 @@ namespace PropertyInventorySystem.Controllers
                 query = query.Where(sp => sp.Property.Name.Contains(searchString)
                                           || sp.Contact.LastName.Contains(searchString));
             }
-
-            // Project your entities to SoldDashboardViewModel instances
+            
             var viewModelQuery = query.Select(sp => new SoldDashboardViewModel
             {
                 // Map properties from SoldProperty to SoldDashboardViewModel
@@ -47,10 +42,10 @@ namespace PropertyInventorySystem.Controllers
                 DateOfPurchase = sp.Property.DateOfRegistration,
                 EffectiveTill = sp.EffectiveTill ?? DateTime.Now, // Assuming EffectiveTill is nullable
                 SoldAtPriceEUR = sp.AcquisitionPrice,
-                // Add other necessary property mappings
+               
             });
 
-            // Create a PaginatedList<SoldDashboardViewModel>
+            // Create a PaginatedList<SoldDashboardViewModel> for the page number 
             var model = await PaginatedList<SoldDashboardViewModel>.CreateAsync(viewModelQuery.AsNoTracking(), pageNumber ?? 1, pageSize);           
           return View(model);
         }
@@ -88,23 +83,16 @@ namespace PropertyInventorySystem.Controllers
                 DateOfPurchase = soldProperty.Property.DateOfRegistration,
                 EffectiveTill = soldProperty.EffectiveTill ?? DateTime.Now, // Assuming EffectiveTill is nullable
                 SoldAtPriceEUR = soldProperty.AcquisitionPrice,
-                // Add other necessary property mappings
+               
             };
 
             return View(viewModel);
         }
-        //public IActionResult Create()
-        //{
-        //    // Initialize your ViewModel if needed
-        //    var viewModel = new SoldDashboardViewModel();
-        //    // Set any default values or load necessary data
-
-        //    return View(viewModel); // Pass the ViewModel to the View
-        //}
+      
         [HttpGet("Edit/{propertyId}/{contactId}")]
         public async Task<IActionResult> Edit(Guid propertyId, Guid contactId)
         {
-            // Fetch sold properties including related Property and Contact data
+           
             var soldProperty = await _context.SoldProperties
             .Include(sp => sp.Property)
             .Include(sp => sp.Contact)
@@ -140,9 +128,9 @@ namespace PropertyInventorySystem.Controllers
             //{
             //    // If ModelState is not valid, return the view with the validation errors
             //    return BadRequest(ModelState);
-            //}
+            //} Time being commented out and not using this validation.
 
-            // Start a transaction to ensure data consistency
+          
             using (var transaction = await _context.Database.BeginTransactionAsync())
             {
                 try
@@ -184,28 +172,27 @@ namespace PropertyInventorySystem.Controllers
                     soldPropertyToUpdate.DateOfRegistration = propertyToUpdate.DateOfRegistration;
                     soldPropertyToUpdate.EffectiveTill = model.EffectiveTill;
 
-                    // No need to call Update method explicitly for tracked entities
+                  
                     // _context.SoldProperties.Update(soldPropertyToUpdate);
 
                     await _context.SaveChangesAsync();
-
-                    // Commit transaction if all operations succeed
+                 
                     await transaction.CommitAsync();
 
-                    TempData["SuccessMessage"] = "Sold Property information updated successfully!";
 
-                  //  return RedirectToAction("Dashboard", "Home");
+                    TempData["SuccessMessage"] = "Sold Property information updated successfully!";
+                    //  return RedirectToAction("Dashboard", "Home");
                 }
                 catch (Exception ex)
                 {
-                    // Log the error
+                  
                     _logger.LogError(ex, "An error occurred while saving the data.");
                     await transaction.RollbackAsync();
-                    ModelState.AddModelError("", "An error occurred while saving the data.");
-                    // Returning to the view with the model to display the error message
+                    ModelState.AddModelError("", "An error occurred while saving the data.");                  
                     return View(model);
                 }
             }
+           
             return RedirectToAction("Dashboard", "Home");
 
         }
@@ -228,29 +215,24 @@ namespace PropertyInventorySystem.Controllers
 
             try
             {
-                // Delete the sold property record
+             
                 _context.SoldProperties.Remove(soldProperty);
-                await _context.SaveChangesAsync();
-
-                // Assuming you have the IDs stored in the soldProperty object
-                // Delete the property record
+                await _context.SaveChangesAsync();             
                 var property = await _context.Properties.FindAsync(soldProperty.PropertyId);
                 if (property != null)
                 {
                     _context.Properties.Remove(property);
                     await _context.SaveChangesAsync();
                 }
-
-                // Delete the contact record
+              
                 var contact = await _context.Contacts.FindAsync(soldProperty.ContactId);
                 if (contact != null)
                 {
                     _context.Contacts.Remove(contact);
                     await _context.SaveChangesAsync();
                 }
-
-                // Redirect or return a success message
-                TempData["SuccessMessage"] = "Record deleted successfully!";
+               
+                TempData["SuccessMessage"] = "Sold Property  deleted successfully!";
                 return RedirectToAction(nameof(Index)); // Assuming you have an Index action to redirect to
             }
             catch (Exception ex)

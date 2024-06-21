@@ -17,7 +17,7 @@
         <input type="text" name="searchString" id="customSearchBox" class="form-control mr-sm-2" placeholder="Search" />
     </form>
 
-    <table id="propertyDashboardTable" class="table table-hover" style="position: absolute;top: 100px;right: 0px;">
+    <table id="propertyDashboardTable" class="table table-hover" style="position: absolute; top: 125px;">
     <tr>
         <th>Property ID</th>
         <th>Contact ID</th>
@@ -42,7 +42,7 @@
             <td>@item.SoldAtPriceEUR</td>
             <td>
                 <a href="@Url.Action("View", new {  propertyId = item.PropertyId, contactId = item.ContactId})">View</a>
-                <a href="@Url.Action("Edit", new {  propertyId = item.PropertyId, contactId = item.ContactId })">Edit</a>
+                <a href="@Url.Action("Edit", new {  propertyId = item.PropertyId, contactId = item.ContactId })">Register</a>
                 <form action="@Url.Action("Delete", new { propertyId = item.PropertyId, contactId = item.ContactId })" method="post">
                     <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this record?');">Delete</button>
                 </form>
@@ -52,7 +52,7 @@
 </table>
 
 <nav>
-        <ul class="pagination" style="margin-left:7%;position: absolute;top:6%;">
+        <ul class="pagination">
         <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
             <a class="page-link" href="@Url.Action("Index", new { pageNumber = Model.PageIndex - 1, searchString = ViewData["CurrentFilter"] })">Previous</a>
         </li>

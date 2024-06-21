@@ -42,18 +42,14 @@ namespace PropertyInventorySystem.Controllers
             }
             catch (Exception ex)
             {
-                // Log the exception details
-                // Consider using a logging framework or service
-                Console.WriteLine(ex.ToString());
-
-                // Optionally, return a custom error view
-                // return View("Error");
-
-                // Or return a generic error message to the user
+              
+                // Consider using a logging framework .....Testing
+                Console.WriteLine(ex.ToString());           
+             
                 return Content("An error occurred while processing your request. Please try again later.");
             }
         }
-        private decimal ConvertEURtoUSD(decimal amountEUR)
+        private static decimal ConvertEURtoUSD(decimal amountEUR)
         {
             decimal exchangeRate = 1.10M; // Placeholder exchange rate
             return amountEUR * exchangeRate;

@@ -13,11 +13,9 @@ namespace PropertyInventorySystem.Controllers
         public PropertyContactController(ILogger<PropertyContactController> logger, AppDbContext context)
         {
             _logger = logger;
-            _context = context; // Assign the injected context to the private field
+            _context = context;
         }
-      
-
-        // Dependency injection for repositories or services if needed
+        // Dependency injection for repositories if needed
 
         [HttpGet]
         public IActionResult Index()
@@ -27,11 +25,10 @@ namespace PropertyInventorySystem.Controllers
         }
         public IActionResult Create()
         {
-            // Initialize your ViewModel if needed
-            var viewModel = new PropertyContactViewModel();
-            // Set any default values or load necessary data
 
-            return View(viewModel); // Pass the ViewModel to the View
+            var viewModel = new PropertyContactViewModel();
+
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -40,28 +37,11 @@ namespace PropertyInventorySystem.Controllers
            
             if (ModelState.IsValid)
             {
-                //    return View(model);
-                return View("Dashboard");
-
-            }
-            foreach (var modelStateKey in ViewData.ModelState.Keys)
-            {
-                var modelStateVal = ViewData.ModelState[modelStateKey];
-                if (modelStateVal.Errors != null) // Added null check for modelStateVal.Errors
-                {
-                    foreach (var error in modelStateVal.Errors)
-                    {
-                        var errorMessage = error.ErrorMessage;
-                        // Log the error message or set a breakpoint here to inspect
-                        _logger.LogError("Validation error for {ModelKey}: {ErrorMessage}", modelStateKey, errorMessage);
-                    }
-                }
-            }
-            using (var transaction = _context.Database.BeginTransaction())
+                using (var transaction = _context.Database.BeginTransaction())
             {
                 try
                 {
-                    // Assuming PropertyContactViewModel has Property and Contact objects
+                  
                     var property = model.Property;
                     var contact = model.Contact;
 
@@ -80,29 +60,43 @@ namespace PropertyInventorySystem.Controllers
                         ContactId = contact.Id,
                         AcquisitionPrice = property.Price,
                         DateOfRegistration = property.DateOfRegistration,
-                        // Set EffectiveTill or other properties as needed
+                      
                     };
                     _context.SoldProperties.Add(soldProperty);
                     await _context.SaveChangesAsync();
-
-                    // Commit transaction if all operations succeed
+                
                     transaction.Commit();
 
                     TempData["SuccessMessage"] = "Property and Contact information saved successfully!";
-                 //   return RedirectToAction(nameof(Index));
+              
                     return RedirectToAction("Dashboard", "Home");
                 }
                 catch (Exception ex)
                 {
-                    // Log the error (uncomment ex variable name and write a log.)
+                 
                     _logger.LogError(ex, "An error occurred while saving the data.");
                     transaction.Rollback();
                     ModelState.AddModelError("", "An error occurred while saving the data.");
                 }
-                // Return the view with validation messages
-                //   return View(model);
+
+                }           
+
             }
-            return RedirectToAction("Dashboard", "Home");
+            foreach (var modelStateKey in ViewData.ModelState.Keys)
+            {
+                var modelStateVal = ViewData.ModelState[modelStateKey];
+                if (modelStateVal.Errors != null) 
+                {
+                    foreach (var error in modelStateVal.Errors)
+                    {
+                        var errorMessage = error.ErrorMessage;
+                      
+                        _logger.LogError("Validation error for {ModelKey}: {ErrorMessage}", modelStateKey, errorMessage);
+                    }
+                }
+            }
+          
+           return RedirectToAction("Dashboard", "Home");
         }
     }
 }

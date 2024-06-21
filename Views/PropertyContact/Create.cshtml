@@ -1,8 +1,7 @@
 ﻿@model  PropertyContactViewModel
 
-<div class="container">
-    <h2>Create Property and Contact</h2>
-    <form asp-action="Create" method="post">
+<div class="container">  
+    <form id="createPropertyForm" asp-action="Create" method="post">
         <div class="row">
             <div class="col-md-6">
                 <h3>Property Details</h3>
@@ -55,3 +54,17 @@
         <button type="submit" class="btn btn-primary">Create</button>
     </form>
 </div>
+<script>
+    
+    document.getElementById('createPropertyForm').addEventListener('submit', function (event) {
+      
+        var inputs = this.querySelectorAll('input.form-control');       
+        for (var i = 0; i < inputs.length; i++) {
+            if (!inputs[i].value.trim()) {               
+                alert('Please fill out all fields before submitting.');
+                event.preventDefault();
+                return false;
+            }
+        }
+    });
+</script>

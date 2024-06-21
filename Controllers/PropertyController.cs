@@ -28,31 +28,31 @@ namespace PropertyInventorySystem.Controllers
           
             try
             {
-                // 1. Add the Contact First
+             
                 await _contactRepository.AddAsync(model.Contact);
-                // 2. Create and add the SoldProperty
+             
                 var soldProperty = new SoldProperty
                 {
                     Contact = model.Contact,
                     AcquisitionPrice = model.Property.Price,
                     DateOfRegistration = model.Property.DateOfRegistration
                 };
-                // 3. Add the SoldProperty to the Property
+              
                 model.Property.SoldProperties.Add(soldProperty);
-                // 4. Add the Property to the database 
+                
                 await _propertyRepository.AddAsync(model.Property);
-                // 5. Serialize the property object (now without a circular reference)
+                
                 var options = new JsonSerializerOptions
                 {
                     ReferenceHandler = ReferenceHandler.Preserve
                 };
                 var propertyJson = JsonSerializer.Serialize(model.Property, options);
-                // 6. Return the CreatedAtAction response
+            
                 return CreatedAtAction(nameof(GetById), new { id = model.Property.Id }, propertyJson);
             }
-            catch (Exception ex)
+            catch (Exception _)
             {
-                // Log the exception (ex)
+            
                 return StatusCode(500, "Internal server error");
             }
         }
@@ -66,9 +66,9 @@ namespace PropertyInventorySystem.Controllers
                 var properties = await _propertyRepository.GetAllAsync();
                 return Ok(properties);
             }
-            catch (Exception ex)
+            catch (Exception _)
             {
-                // Log the exception (ex)
+             
                 return StatusCode(500, "Internal server error");
             }
         }
@@ -85,9 +85,9 @@ namespace PropertyInventorySystem.Controllers
                 }
                 return Ok(property);
             }
-            catch (Exception ex)
+            catch (Exception _)
             {
-                // Log the exception (ex)
+              
                 return StatusCode(500, "Internal server error");
             }
         }
@@ -100,9 +100,9 @@ namespace PropertyInventorySystem.Controllers
                 await _propertyRepository.AddAsync(property);
                 return CreatedAtAction(nameof(GetById), new { id = property.Id }, property);
             }
-            catch (Exception ex)
+            catch (Exception _)
             {
-                // Log the exception (ex)
+                
                 return StatusCode(500, "Internal server error");
             }
         }
@@ -120,9 +120,9 @@ namespace PropertyInventorySystem.Controllers
                 await _propertyRepository.UpdateAsync(property);
                 return NoContent();
             }
-            catch (Exception ex)
+            catch (Exception _)
             {
-                // Log the exception (ex)
+              
                 return StatusCode(500, "Internal server error");
             }
         }
@@ -135,9 +135,9 @@ namespace PropertyInventorySystem.Controllers
                 await _propertyRepository.DeleteAsync(id);
                 return NoContent();
             }
-            catch (Exception ex)
+            catch (Exception _)
             {
-                // Log the exception (ex)
+               
                 return StatusCode(500, "Internal server error");
             }
         }

@@ -24,7 +24,7 @@ namespace PropertyInventorySystem.Repositories
             }
             catch (Exception ex)
             {
-                // Log the exception (ex)
+             
                 throw new Exception("Could not retrieve contacts.", ex);
             }
         }
@@ -37,7 +37,7 @@ namespace PropertyInventorySystem.Repositories
             }
             catch (Exception ex)
             {
-                // Log the exception (ex)
+               
                 throw new Exception($"Could not retrieve contact with ID {id}.", ex);
             }
         }
@@ -51,7 +51,7 @@ namespace PropertyInventorySystem.Repositories
             }
             catch (Exception ex)
             {
-                // Log the exception (ex)
+               
                 throw new Exception("Could not add contact.", ex);
             }
         }
@@ -65,7 +65,7 @@ namespace PropertyInventorySystem.Repositories
             }
             catch (Exception ex)
             {
-                // Log the exception (ex)
+              
                 throw new Exception("Could not update contact.", ex);
             }
         }
@@ -80,7 +80,7 @@ namespace PropertyInventorySystem.Repositories
             }
             catch (Exception ex)
             {
-                // Log the exception (ex)
+             
                 throw new Exception($"Could not delete contact with ID {id}.", ex);
             }
         }
